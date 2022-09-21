@@ -1,20 +1,25 @@
 package com.entech.order.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "tbl_customer")
 public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="customer_id")
 	private Long customerId;
 	private String firstName;
 	private String middleName;
@@ -27,6 +32,10 @@ public class Customer {
 	private Integer rating;
 	private Timestamp createdAt;
 	private String createdBy;
+	
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private List<Order> orders;
+	
 	public Long getCustomerId() {
 		return customerId;
 	}
@@ -92,6 +101,12 @@ public class Customer {
 	}
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 	
 }

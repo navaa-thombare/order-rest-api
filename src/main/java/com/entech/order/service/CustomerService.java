@@ -1,5 +1,7 @@
 package com.entech.order.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,12 @@ public class CustomerService {
 	private CustomerRepository customerRepository;
 	
 	public Customer getCustomerById(Long id) {
-		return customerRepository.findById(id).get();
+		Optional<Customer> opCust = customerRepository.findById(id);
+		if(opCust.isPresent()) {
+			return opCust.get();
+		}else {
+			return null;
+		}
 	}
 
 	public Customer createCustomer(Customer customer) {
@@ -23,6 +30,12 @@ public class CustomerService {
 	}
 
 	public Customer findCustomerByMobileNumber(CustomerDTO custDTO) {
-		return customerRepository.findByMobileNo(custDTO.getMobileNo()).get(0);
+		String mobNo = custDTO.getMobileNo();
+		Optional<Customer> opCust = customerRepository.findByMobileNo(mobNo);
+		if(opCust.isPresent()) {
+			return opCust.get();
+		}else {
+			return null;
+		}
 	}
 }
