@@ -6,12 +6,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tbl_customer")
@@ -33,7 +36,8 @@ public class Customer {
 	private Timestamp createdAt;
 	private String createdBy;
 	
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private List<Order> orders;
 	
 	public Long getCustomerId() {

@@ -38,4 +38,9 @@ public class CustomerService {
 			return null;
 		}
 	}
+
+	public Customer findById(Long customerId) {
+		
+		return customerRepository.findById(customerId).isPresent()? customerRepository.findById(customerId).get():null;
+	}
 }
